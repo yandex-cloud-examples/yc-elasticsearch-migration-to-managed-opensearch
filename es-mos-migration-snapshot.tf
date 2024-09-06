@@ -10,7 +10,7 @@ locals {
   bucket_name = "" # Set a unique bucket name
 
   # Settings for the Managed Service for OpenSearch cluster:
-  os_version       = "" # Set a desired version of OpenSearch. For available versions, see the documentation main page: https://cloud.yandex.com/en/docs/managed-opensearch/
+  os_version        = "" # Set a desired version of OpenSearch. For available versions, see the documentation main page: https://cloud.yandex.com/en/docs/managed-opensearch/
   os_admin_password = "" # Set a password for the OpenSearch administrator
 
   # The following settings are predefined. Change them only if necessary.
@@ -135,6 +135,7 @@ resource "yandex_mdb_opensearch_cluster" "mos-cluster" {
         assign_public_ip = true
         hosts_count      = 1
         zone_ids         = ["ru-central1-a"]
+        subnet_ids       = [yandex_vpc_subnet.subnet-a.id]
         roles            = ["DATA", "MANAGER"]
         resources {
           resource_preset_id = "s2.micro"  # 2 vCPU, 8 GB RAM
@@ -152,6 +153,7 @@ resource "yandex_mdb_opensearch_cluster" "mos-cluster" {
         assign_public_ip = true
         hosts_count      = 1
         zone_ids         = ["ru-central1-a"]
+        subnet_ids       = [yandex_vpc_subnet.subnet-a.id]
         resources {
           resource_preset_id = "s2.micro"  # 2 vCPU, 8 GB RAM
           disk_size          = 10737418240 # Bytes
@@ -159,7 +161,10 @@ resource "yandex_mdb_opensearch_cluster" "mos-cluster" {
         }
       }
     }
+  }
 
+  maintenance_window {
+    type = "ANYTIME"
   }
 
   depends_on = [
