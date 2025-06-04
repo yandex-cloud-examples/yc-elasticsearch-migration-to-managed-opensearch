@@ -1,0 +1,3 @@
+# Migrating data from Elasticsearch to Yandex Managed Service for OpenSearch
+
+To transfer data from an Elasticsearch cluster to a [Managed Service for OpenSearch](https://yandex.cloud/docs/managed-opensearch) one, you can use snapshots or re-indexing. See [this tutorial](https://yandex.cloud/docs/managed-opensearch/tutorials/migration-to-opensearch) to learn how to configure both options using Terraform. For the configuration files you will need to set up the solutions, [es-mos-migration-snapshot.tf](es-mos-migration-snapshot.tf) and [es-mos-migration-reindex.tf](es-mos-migration-reindex.tf), see this repository.
